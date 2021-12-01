@@ -505,8 +505,8 @@ export class CantorasController {
     return 'Mostrando Cantora pelo ID';
   }
 
-  @Post() // Dizendo que POST é um DECORATOR
-  criandoCantora() { // Criando Classe 'criandoCantora()'
+  @Post() // Dizendo que POST é um DECORATOR do método abaixo
+  criandoCantora() { // Criando método 'criandoCantora()'
     return 'Cantora Criada'; // Mensagem que será exibida na tela
   }
 }
@@ -551,8 +551,8 @@ export class CantorasController {
     return 'Cantora Criada';
   }
 
-  @Delete('/:cantoraId') // Dizendo que DELETE é um DECORATOR e vai para /cantoras/:cantoraID
-  removendoCantora() { // Criando Classe 'removendoCantora()'
+  @Delete('/:cantoraId') // Dizendo que DELETE é um DECORATOR do método abaixo
+  removendoCantora() { // Criando método 'removendoCantora()'
     return 'Cantora Removida'; // Mensagem que será exibida na tela
   }
 }
@@ -570,3 +570,54 @@ Agora, vamos testar:
 ![image_11](images/image_11.png)
 
 Se tudo está certo, a resposta '**Cantora Removida**' deverá aparecer!
+
+## `PUT` /cantoras/:cantoraId
+
+Para esta rota devemos criar um método chamado `atualizandoCantora()` que nos retornará uma mensagem na tela. 
+
+Como **PUT** se trata de um método diferente dos anteriores, precisamos importá-lo e adicionar-mos como _decorator_ de `atualizandoCantora()`.
+
+```
+import { Controller, Get, Post, Delete, Put } from '@nestjs/common'; // Importando método PUT
+
+@Controller('cantoras')
+export class CantorasController {
+  @Get()
+  getCantoras() {
+    return 'Todas as cantoras';
+  }
+
+  @Get('/:cantoraId')
+  getCantoraById() {
+    return 'Mostrando Cantora pelo ID';
+  }
+
+  @Post()
+  criandoCantora() {
+    return 'Cantora Criada';
+  }
+
+  @Delete('/:cantoraId')
+  removendoCantora() { 
+    return 'Cantora Removida'; // Mensagem que será exibida na tela
+  }
+  
+  @Put('/:cantoraId') // Dizendo que @Put() é um DECORATOR do método abaixo
+  atualizandoCantora() { // Criando o método 'atualizandoCantora()'
+    return 'Informações da Cantora Atualizadas';
+  }
+}
+
+```
+
+Ao salvar seu arquivo, a saída no terminal deve ter esta linha adicional:
+
+- `LOG [RouterExplorer] Mapped {/cantoras/:cantoraId, PUT} route` - Rota `PUT /cantoras/:cantoraId` mapeada
+
+Agora, vamos testar:
+
+:bangbang: Certifique-se de que o **PUT** é o verbo que está sendo utilizado.
+
+![image_12](images/image_12.png)
+
+Se tudo está certo, a resposta '**Informações da Cantora Atualizadas**' deverá aparecer!

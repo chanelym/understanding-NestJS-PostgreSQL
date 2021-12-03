@@ -118,7 +118,7 @@ Execute o comando `ls`em seu terminal e cheque se a pasta do projeto criada est�
 
 Acesse a pasta do projeto-nest com o comando:
 
-`cd nome-do-projeto`. 
+`cd nome-do-projeto`
 
 No nosso exemplo: 
 
@@ -130,7 +130,7 @@ No menu do VS Code podemos ver que diversos arquivos e uma estrutura de pastas f
 
 - package.json
   - lista todas as dependências que o projeto usa juntamente com as suas versões,e;
-  - facilita o compartilhamento com outras pessoas desenvolvedoras
+  - facilita o compartilhamento com outras pessoas desenvolvedoras.
 - .gitignore
   - Possui uma lista de arquivos e diretórios que são ignorados no momento de subir a estrutura para o GitHub.
 - *.ts
@@ -139,7 +139,7 @@ No menu do VS Code podemos ver que diversos arquivos e uma estrutura de pastas f
   - Arquivo de configuração do ESLINT, uma ferramenta que identifica e reporta padrões no código, nos retornando erros ou não, e;
   - Evita bugs e torna o código mais consistente.
 
-:bangbang: Neste momento, não vamos nos preocupar com a estrutura de pastas. Você perceberá que a estrutura proposta aqui acompanha os padrões atuais do mercado e não invalida o que aprendemos em sala, pelo contrário, complementa! :bangbang:
+:bangbang: Neste momento, não vamos nos preocupar com a estrutura de pastas. :bangbang:
 
 Na pasta **src**, faça a remoção destes três arquivos:
 

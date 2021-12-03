@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
-import { CantorasController } from '../cantoras/cantora.controller'; // Importando arquivo de configuração
+import { CantorasController } from '../cantoras/cantora.controller';
+import { AlbunsController } from '../albuns/albuns.controller';
+import { AlbunsCantorasController } from '../cantoras/albuns.cantoras.controller';
 
 @Module({
   imports: [],
-  // Criando Key e Array com a Classe CantorasController
-  controllers: [CantorasController],
+  controllers: [CantorasController, AlbunsController, AlbunsCantorasController],
 })
 export class AppModule {}

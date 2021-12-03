@@ -1,4 +1,4 @@
-# API REST com NestJS, Prisma e PostgreSQL - Material em Construção
+# API REST com NestJS, Prisma e PostgreSQL
 
 **NestJS** é um framework que nos ajuda a escalar de forma eficiente as aplicações construídas em cima do **Node.js**. Possui suporte para **JavaScript** e também **TypeScript**. 
 
@@ -221,7 +221,7 @@ No nosso exemplo:
 project: 'nest-singers/tsconfig.json',
 ```
 
-## Criando as Rotas
+## Criando as Rotas - Cantoras Endpoint
 
 Em Nest as rotas são criadas através dos **_Controllers_**. Mas o que são eles? O que comem?
 
@@ -296,7 +296,7 @@ class CantorasController {
 
 Assim, cada verbo HTTP (GET, PUT, POST e DELETE) dentro do _controller_ vai começar com `/cantoras`.
 
-## `GET` /cantoras 
+### `GET` /cantoras 
 
 Vamos dizer ao Nest que estamos criando esta rota e que ela receberá um verbo **GET** via HTTP e vai **retornar** alguma coisa na tela.
 
@@ -428,7 +428,7 @@ Se tudo está certo, a resposta '**Todas as cantoras**' deverá aparecer!
 
 ![image_08](images/image_08.png)
 
-## `GET` /cantoras/:cantoraID
+### `GET` /cantoras/:cantoraID
 
 Neste momento, como não estamos fazendo uso de um Banco de Dados ou usando um arquivo .json para armazenar os dados, receberemos um ID aleatórios
 
@@ -480,11 +480,15 @@ Ao salvar seu arquivo, a saída no terminal deve ter esta linha adicional:
 
 Agora, vamos testar:
 
+:bangbang: Certifique-se de que o **GET** é o verbo que está sendo utilizado.
+
+**No Thunder**: `localhost:3000/cantoras/1234`
+
 ![image_09](images/image_09.png)
 
 Se tudo está certo, a resposta '**Mostrando Cantora pelo ID**' deverá aparecer!
 
-## `POST` /cantoras
+### `POST` /cantoras
 
 Para esta rota devemos criar um método chamado `criandoCantora()` que nos retornará uma mensagem na tela. 
 
@@ -521,11 +525,13 @@ Agora, vamos testar:
 
 :bangbang: Certifique-se de que o **POST** é o verbo que está sendo utilizado.
 
+**No Thunder**: `localhost:3000/cantoras`
+
 ![image_10](images/image_10.png)
 
 Se tudo está certo, a resposta '**Cantora Criada**' deverá aparecer!
 
-## `DELETE` /cantoras/:cantoraId
+### `DELETE` /cantoras/:cantoraId
 
 Para esta rota devemos criar um método chamado `removendoCantora()` que nos retornará uma mensagem na tela. 
 
@@ -567,11 +573,13 @@ Agora, vamos testar:
 
 :bangbang: Certifique-se de que o **DELETE** é o verbo que está sendo utilizado.
 
+**No Thunder**:  `localhost:3000/cantoras/1234`
+
 ![image_11](images/image_11.png)
 
 Se tudo está certo, a resposta '**Cantora Removida**' deverá aparecer!
 
-## `PUT` /cantoras/:cantoraId
+### `PUT` /cantoras/:cantoraId
 
 Para esta rota devemos criar um método chamado `atualizandoCantora()` que nos retornará uma mensagem na tela. 
 
@@ -618,6 +626,236 @@ Agora, vamos testar:
 
 :bangbang: Certifique-se de que o **PUT** é o verbo que está sendo utilizado.
 
+**No Thunder**: `localhost:3000/cantoras/1234`
+
 ![image_12](images/image_12.png)
 
 Se tudo está certo, a resposta '**Informações da Cantora Atualizadas**' deverá aparecer!
+
+### Criando as Rotas - Albuns Endpoint
+
+Todo o processo de criação de um _controller_ não precisa ser feito exatamente como fizemos até aqui. Posto isso, se consultarmos a documentação do Nest encontraremos uma informação interessante:
+
+ ![image_13](images/image_13.png)
+
+A partir de agora nós temos a opção de criar um _controller_ com este comando `nest g controller novo-controller --no-spec`, onde:
+
+- `nest`- chama o nest;
+- `g` - de _generate_ , ou seja, gerar;
+- `controller` - um novo controller;
+- `novo-controller` - com o nome que você escolher, e;
+- `--no-spec` - para que nenhum arquivo de texto seja criado junto.
+
+Para o nosso exemplo: `nest g controller albuns --no-spec`
+
+![image_14](images/image_14.png)
+
+Criamos a pasta **Albuns** com o arquivo de _albuns.controller.ts_ que já vem com algumas linhas de código. 
+
+Lembrando que o _endpoint_ possui um padrão:
+
+`GET` /albuns
+
+`GET` /albuns/:albumId
+
+`GET` /albuns/:albumId/cantoras
+
+`PUT` /albuns/:albumId:cantoras/:cantoraId
+
+Ao abrirmos o arquivos notamos que **/albuns** já está definido no _decorator_ principal:
+
+```
+import { Controller } from '@nestjs/common';
+
+@Controller('albuns')
+export class AlbunsController {}
+
+```
+
+Vamos agora criar a estrutura básica das nossas rotas:
+
+```
+import { Controller, Get, Put } from '@nestjs/common';
+
+@Controller('albuns')
+export class AlbunsController {
+  @Get()
+  getAlbuns() {
+    return 'Todos os Álbuns';
+  }
+
+  @Get('/:albumId')
+  getAlbumById() {
+    
+  }
+
+  @Get('/:albumId/cantoras')
+  getCantoras() {
+    
+  }
+
+  @Put('/:albumId/cantoras/:cantoraId')
+  atualizandoAlbumCantora() {
+    
+  }
+}
+
+```
+
+Se observarmos bem, também temos um padrão nestas rotas, duas delas começam com  `/:albumId/cantoras`. 
+
+Imagine que este arquivo continue crescendo em rotas e este padrão continue, o mais adequado é o movermos para um outro arquivo.
+
+Estas duas rotas possuem dois métodos diferentes, uma é um `GET` a outra um `PUT`, porém, ambas estão lidando com informações que são mais específicas aos álbuns de cada cantoras do que sobre todos os álbuns armazenados.
+
+Vamos então criar um arquivo na pasta '**cantoras**' que acomode as requisições relacionadas aos álbuns delas:
+
+- `albuns.cantoras.controller.ts`
+
+E mover estas rotas para o novo arquivo criando a classe específica para eles:
+
+```
+import { Controller, Get, Put } from '@nestjs/common';
+
+@Controller('albuns')
+export class AlbunsCantorasController { // Classe criada para lidar com as requisições dos albuns das cantoras
+  @Get('/:albumId/cantoras')
+  getCantoras() {
+    
+  }
+
+  @Put('/:albumId/cantoras/:cantoraId')
+  atualizandoAlbumCantora() {
+    
+  }
+}
+
+```
+
+Feito isso, precisamos remover estas informações do _controller_ na pasta '**albuns**':
+
+```
+import { Controller, Get } from '@nestjs/common';
+
+@Controller('albuns')
+export class AlbunsController {
+  @Get()
+  getAlbuns() {
+    return 'Todos os Álbuns';
+  }
+
+  @Get('/:albumId')
+  getAlbumById() {
+    
+  }
+}
+
+```
+
+Mas os ajustes ainda não terminaram porque precisamos dizer ao _decorator_ de `AlbunsCantorasController` que estas rotas vão receber requisições de um caminho bem específico e ajustar os métodos.
+
+```
+import { Controller, Get, Put } from '@nestjs/common';
+
+@Controller('albuns/:albumId/cantoras') // Dizendo ao Decorator a Rota pela qual receberá as requisições
+export class AlbunsCantorasController {
+  @Get() // Método GET ajustado
+  getCantoras() {
+    
+  }
+
+  @Put('/:cantoraId') // Método PUT ajustado
+  atualizandoAlbumCantora() {
+    
+  }
+}
+
+```
+
+Feito isso, podemos adicionar as mensagens que serão devolvidas na tela ao acessarmos essas rotas. 
+
+- `albuns.cantoras.controller.ts`
+
+  ```
+  import { Controller, Get, Put } from '@nestjs/common';
+  
+  @Controller('albuns/:albumId/cantoras') // Dizendo ao Decorator a Rota pela qual receberá as requisições
+  export class AlbunsCantorasController {
+    @Get()
+    getCantoras() {
+      return 'Retornando todos os álbuns que pertence à cantora';
+    }
+  
+    @Put('/:cantoraId')
+    atualizandoAlbumCantora() {
+      return 'Atualizando o álbum que pertence à cantora';
+    }
+  }
+  
+  ```
+
+- `albuns.controller.ts`
+
+  ```
+  import { Controller, Get } from '@nestjs/common';
+  
+  @Controller('albuns')
+  export class AlbunsController {
+    @Get()
+    getAlbuns() {
+      return 'Todos os Álbuns';
+    }
+  
+    @Get('/:albumId')
+    getAlbumById() {
+      return 'Mostrando Album pelo ID';
+    }
+  }
+  
+  ```
+
+Criamos estes _Controllers_ mas ainda não dissemos no `app.module.ts` sobre essas mudanças. Vamos importá-las e configurar:
+
+```
+import { Module } from '@nestjs/common';
+import { CantorasController } from '../cantoras/cantora.controller'; // Importando arquivo de configuração
+import { AlbunsController } from '../albuns/albuns.controller'; // Importando arquivo de configuração
+import { AlbunsCantorasController } from '../cantoras/albuns.cantoras.controller'; // Importando arquivo de configuração
+
+@Module({
+  imports: [],
+  // Adicionando as classes ao Array
+  controllers: [CantorasController, AlbunsController, AlbunsCantorasController],
+})
+export class AppModule {}
+
+```
+
+Ufa! Agora vamos testar tudo:
+
+- `GET` /albuns
+  - **Na saída do terminal**: `LOG [RouterExplorer] Mapped {/albuns, GET} route`
+  - **No Thunder**: `localhost:3000/albuns`
+
+![image_15](images/image_15.png)
+
+- `GET` /albuns/:albumId
+  - **Na saída do terminal**: `LOG [RouterExplorer] Mapped {/albuns/:albumId, GET} route`
+  - **No Thunder**: `localhost:3000/albuns/5678`
+
+![image_16](images/image_16.png)
+
+- `GET` /albuns/:albumId/cantoras
+  - **Na saída do terminal**: `LOG [RouterExplorer] Mapped {/albuns/:albumId/cantoras, GET} route`
+  - **No Thunder**: `localhost:3000/albuns/5678/cantoras`
+
+![image_17](images/image_17.png)
+
+- `PUT` /albuns/:albumId/cantoras/:cantoraId
+  - **Na saída do terminal**: `LOG [RouterExplorer] Mapped {/albuns/:albumId/cantoras/:cantoraId, PUT} route`
+  - **No Thunder**: `localhost:3000/albuns/5678/cantoras/1234`
+
+![image_18](images/image_18.png)
+
+## Extraindo os ID's da Requisição
+

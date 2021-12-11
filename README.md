@@ -2,7 +2,7 @@
 
 **NestJS** é um framework que nos ajuda a escalar de forma eficiente as aplicações construídas em cima do **Node.js**. Possui suporte para **JavaScript** e também **TypeScript**. 
 
-Para entendermos como o Nest estrutura e constrói as coisas uma revisão no assunto de **orientação a objetos** será bastante importante.
+Para entendermos como o Nest estrutura e constrói as coisas, uma revisão no assunto de **orientação a objetos** será bastante importante.
 
 O Nest possui diversas semelhanças com o **Express** justamente por ter sido construído em cima dele. Em essência,  continuaremos a construir uma API.
 
@@ -34,7 +34,7 @@ Esta API servirá dados sobre cantoras e seus discos.
 
 `GET` /albuns
 
-- Esta rota lista todas os discos disponíveis em nosso banco de dados.
+- Esta rota lista todos os discos disponíveis em nosso banco de dados.
 
 `GET` /albuns/:albumId
 
@@ -62,7 +62,7 @@ Para começarmos é necessário criar uma pasta para o projeto. Lembre-se que o 
 - Conter espaços, e;
 - Caracteres especiais.
 
-O nome da pasta deve com toda a certeza **indicar sobre o que o projeto se trata**. Lembre-se que ao programar não está somente consolidando um conhecimento para você, mas também ajudando outras pessoas no processo.
+O nome da pasta deve **indicar sobre o que o projeto se trata**. Lembre-se que ao programar, você não está somente consolidando um conhecimento para você, mas também ajudando outras pessoas no processo.
 
 Após criada a pasta, **abra-a** dentro do VS Code.
 
@@ -88,7 +88,7 @@ nest -v
 
 Se instalado corretamente, deverá aparecer em sua tela a **versão** do Nest instalada.
 
-Indicando agora ao nest que queremos criar um novo projeto com sua estrutura, o seguinte comando no terminal nos ajudará:
+Indicamos agora ao nest que queremos criar um novo projeto com sua estrutura, o seguinte comando no terminal nos ajudará:
 
 ``` 
 nest new nome-do-projeto
@@ -104,9 +104,9 @@ Ao executar estes comandos o terminal fará algumas interações com você, como
 
 ![image_01](images/image_01.png)
 
-Escolheremos o **npm** como nosso gerenciador de pacotes.
+Escolheremos o **npm** como nosso gerenciador de pacotes, que é o gerenciador indicado pela documentação do nest.
 
-> **_NOTA_**: Você pode escolher pelo yarn, porém, certifique-se de que possui este gerenciador de pacotes instalado em seu PC. 
+> **_NOTA_**: Você pode optar pelo yarn, porém, certifique-se de que possui este gerenciador de pacotes instalado em seu PC. 
 
 Ao finalizar a instalação, a tela abaixo deve aparecer:
 
@@ -186,7 +186,7 @@ bootstrap();
 
 - `async function bootstrap()` - nesta função está acontecendo a inicialização da nossa API
 - `const app = await NestFactory.create(AppModule)` - estamos criando uma aplicação Nest através do **NestFactory** e passando para ela onde está a lógica de funcionamento através de **(AppModule)**
-- `await app.listen(3000)` - função que diz que estamos rodando nossa aplicação na porta 300
+- `await app.listen(3000)` - função que diz que estamos rodando nossa aplicação na porta 3000
 - `bootstrap()` - precisamos chamar nossa função bootstrap() para dar início a todo processo
 
 Altere também o caminho no arquivo **app.e2e-spec.ts** na pasta **test** para o ESLINT não seguir reclamando:
@@ -270,7 +270,7 @@ Para uma classe virar um _controller_ precisamos adicionar o _decorator_ '**@Con
 
 > Todas as rotas devem ser definidas **dentro** da classe-controller
 
-Olha só que interessante... se observarmos com atenção notaremos um padrão em nossas rotas:
+Olha só que interessante... se observarmos com atenção, notaremos um padrão em nossas rotas:
 
 `GET` /cantoras 
 
@@ -404,13 +404,13 @@ nest start --watch
 
 O que em realidade nos diz que se realizarmos alguma alteração nos arquivos a aplicação é imediatamente reiniciada. 
 
-Se tudo deu certo, seu terminal deve estar mostrando a aplicação sendo executada com sucesso e pode ser testada no Thunder ou Postman ou Insomnia.
+Se tudo deu certo, seu terminal deve estar mostrando a aplicação sendo executada com sucesso e pode ser testada no Thunder, Postman ou Insomnia.
 
 ![image_07](images/image_07.png)
 
 O barato na saída deste terminal é a quantidade de informações que temos:
 
-- `LOG [NestFactory] Starting Nest application...` - Aqui o Nest está subindo
+- `LOG [NestFactory] Starting Nest application...` - Aqui o Nest está iniciando
 - `LOG [InstanceLoader] AppModule dependencies initialized` - Iniciadas todas as dependências necessárias à API
 - `LOG [RoutesResolver] CantorasController {/cantoras}` - Controller para Cantoras funcionando
 - `LOG [RouterExplorer] Mapped {/cantoras, GET}` - Rota `GET /cantoras` mapeada
